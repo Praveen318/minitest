@@ -41,32 +41,12 @@ public class MasterController {
 
 	@PostMapping("/Login")
 	public String authenticateAndGetToken(@Valid @RequestBody AuthReq authReq) {
-//		Authentication authentication = authenticationManager
-//				.authenticate(new UsernamePasswordAuthenticationToken(authReq.getEmail(), authReq.getPassword()));
-//		if (authentication.isAuthenticated()) {
-//			User user = userRepository.findByEmail(authReq.getEmail()).orElse(null);
-//			String token = jwtService.generateToken(authReq.getEmail());
-//			user.setToken(token);
-//			userRepository.save(user);
-//			return token;
-//		}
-//		// return jwtService.generateToken(authReq.getEmail());}
-//		else
-//			throw new CustomException("No authorities given to user");
 		return masterService.authenticateAndGetToken(authReq);
 	}
 
 	@PostMapping("/add")
 	@PreAuthorize("hasAuthority('Master')")
 	public String add(@RequestBody MasterData masterData) {
-//		User user = Convertor.userdetailstouser(masterData);
-//		user.setPassword(passwordEncoder.encode(user.getPassword()));
-//		try {
-//		userRepository.save(user);
-//		return "added";
-//		}catch (DataIntegrityViolationException ex) {
-//			return "email already exist";
-//		}
 		return masterService.add(masterData);
 	}
 
@@ -75,13 +55,6 @@ public class MasterController {
 	public String Logout(HttpServletRequest request) {
 		String authHeader = request.getHeader("Authorization");
 		String token = authHeader.substring(7);
-//		if (userRepository.findByToken(token) != null) {
-//			User user = userRepository.findByToken(token);
-//			user.setToken(null);
-//			userRepository.save(user);
-//			return "Logged_out";
-//		} else
-//			throw new CustomException("User Logged out");
 		return masterService.Logout(token);
 	}
 
@@ -89,7 +62,6 @@ public class MasterController {
 	@PostMapping("/addQuestion")
 	@PreAuthorize("hasAuthority('Master')")
 	public Questions addQuestion(@RequestBody QuestionsData questionsData) {
-//		return questionsRepository.save(question);
 		return masterService.addQuestion(questionsData);
 	}
 
@@ -97,7 +69,6 @@ public class MasterController {
 	@GetMapping("/findAllQuestions")
 	@PreAuthorize("hasAuthority('Master')")
 	public List<Questions> getAllQuestion() {
-//		return questionsRepository.findAll();
 		return masterService.getAllQuestion();
 	}
 
@@ -105,18 +76,6 @@ public class MasterController {
 	@PutMapping("/updateQuestion/{id}")
 	@PreAuthorize("hasAuthority('Master')")
 	public Questions updateQuestion(@PathVariable int id, @RequestBody QuestionsData questionsData) {
-//		Questions existingquestion=questionsRepository.findById(id).orElse(null);
-//		if(existingquestion!=null) {
-//			existingquestion.setCorrectAnswer(question.getCorrectAnswer());
-//			existingquestion.setOptionD(question.getOptionD());
-//			existingquestion.setOptionC(question.getOptionC());
-//			existingquestion.setOptionB(question.getOptionB());
-//			existingquestion.setOptionA(question.getOptionA());
-//			existingquestion.setQuestions(question.getQuestions());
-//			return questionsRepository.save(existingquestion);			
-//		}
-//		else
-//			throw new CustomException("NoQuestionfoundtobeReplaced");
 		return masterService.updateQuestion(id, questionsData);
 	}
 
@@ -124,15 +83,6 @@ public class MasterController {
 	@PostMapping("/setTest/{testTime}")
 	@PreAuthorize("hasAuthority('Master')")
 	public TestRule setTest(@PathVariable int testTime, @RequestBody int numberOfQuestions) {
-//		if(numberOfQuestions<=questionsRepository.count()) {
-//			TestRule testRule=testRuleRepository.findById(1).orElseGet(null);
-//			testRule.setTestTime(testTime);
-//			testRule.setNumberOfQuestions(numberOfQuestions);
-//			testRuleRepository.save(testRule);
-//			return testRule;			
-//		}
-//		else
-//			throw new CustomException("question limit exceed");
 		return masterService.setTest(testTime, numberOfQuestions);
 	}
 
@@ -140,7 +90,6 @@ public class MasterController {
 	@GetMapping("/findAllStudent")
 	@PreAuthorize("hasAuthority('Master')")
 	public List<StudentProfileData> getAllStudent() {
-//		return userRepository.findByRoles("Student");
 		return masterService.getAllStudent();
 	}
 
@@ -148,18 +97,6 @@ public class MasterController {
 	@PostMapping("/grantPermission/{id}")
 	@PreAuthorize("hasAuthority('Master')")
 	public StudentProfileData grantPermission(@PathVariable int id) {
-//		User user=userRepository.findById(id).orElse(null);
-//		if(user!=null) {
-//			if(user.getPermission().equals("Revoked")) {
-//				user.setPermission("Granted");
-//				userRepository.save(user);
-//				return user; 
-//			}
-//			else
-//				throw new CustomException("user already granted permission");			
-//		}
-//		else
-//			throw new CustomException("no user found");
 
 		return masterService.grantPermission(id);
 	}
